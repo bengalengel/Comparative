@@ -7,10 +7,10 @@ phoscount <- function(phospho,phospho1,multExpanded,multExpanded1){
   sites <- nrow(phospho)
   
   ##number of quantified sites
-  quantsites <- sum(!is.na(phospho$Ratio.H.L))
+  quantsites <- sum(phospho$Intensity > 0)
   
   # number of proteins mapped from quant sites
-  tmp <- phospho[!is.na(phospho$Ratio.H.L),]
+  tmp <- phospho[phospho$Intensity > 0,]
   proteinquantsites <- nrow(table(tmp$Protein))
   
   # number of leading proteins and protein groups
@@ -21,10 +21,10 @@ phoscount <- function(phospho,phospho1,multExpanded,multExpanded1){
   ##number of unique class 1 sites
   class1 <- nrow(phospho1)
   #number of quantified class 1 sites
-  quantClass1 <- sum(!is.na(phospho1$Ratio.H.L))
+  quantClass1 <- sum(phospho1$Intensity > 0)
   
   # number of proteins mapped from quant sites
-  tmp <- phospho1[!is.na(phospho$Ratio.H.L),]
+  tmp <- phospho1[phospho1$Intensity > 0,]
   c1proteinquantsites <- nrow(table(tmp$Protein))
   
   # number of leading proteins and protein groups

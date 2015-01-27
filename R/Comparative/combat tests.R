@@ -6,7 +6,7 @@ require(swamp)
 require(statmod)
 
 #make the sparse matrix from real data (all quants of class 1 here) 
-expCol <- grep("HL(.*)", colnames(multExpanded1))
+expCol <- grep("Int[0-9]", colnames(multExpanded1))
 data <- multExpanded1[,expCol]
 
 # data <- cbind(data,multExpanded1$Intensity)
@@ -25,6 +25,11 @@ idmult <- paste(multExpanded1$id, multExpanded1$multiplicity, sep="_")
 row.names(data) <- idmult
 multExpanded1 <- cbind(multExpanded1,idmult)
 data <- log2(data)
+
+data <- do.call(data.frame,lapply(data, function(x) replace(x, is.infinite(x),NA)))
+row.names(data) <- idmult
+
+
 
 # Within Individual experiment 'MA' plots with color change. M is log2(H/L) and A is the log2(total intensity from both heavy and light peptides ACROSS ALL EXPERIMENTS (Intensity) and for the individual experiment)
 plot(data$Intensity, data$HL18486_1_1, ylim=c(-6,6))
