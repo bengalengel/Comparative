@@ -166,9 +166,9 @@ boxplot(data[,1:12], ylim=c(-4,4))
 
 
 #median normalize
-names <- colnames(data)[1:12]
+names <- colnames(data)[1:9]
 median.subtract <- function(x){ x - median(x, na.rm = TRUE)}##create a wrapper for median subtraction
-data <- colwise(median.subtract, names)(data) #create median subtracted data but loose intensity and the row names here...
+datamed <- colwise(median.subtract, names)(data) #create median subtracted data but loose intensity and the row names here...
 
 row.names(data) <- idmult##add back the row names
 
@@ -192,7 +192,7 @@ for (i in 1:(ncol(data))){
 # quantile normalization. from normalize.quantiles {preprocessCore}  
 # "This functions will handle missing data (ie NA values), based on the assumption that the data is missing at random."
 
-quantiled <- normalizeQuantiles(data,ties = T)#ties are all assigned the same value for the common quantile
+quantiled <- normalizeQuantiles(datamed,ties = T)#ties are all assigned the same value for the common quantile
 summary(quantiled)
 boxplot(data)
 boxplot(quantiled)
